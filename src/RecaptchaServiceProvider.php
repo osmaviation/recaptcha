@@ -1,4 +1,6 @@
-<?php namespace Greggilbert\Recaptcha;
+<?php
+
+namespace OSMAviation\Recaptcha;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -27,7 +29,7 @@ class RecaptchaServiceProvider extends ServiceProvider
     {
         $this->addValidator();
 
-        $this->loadViewsFrom(__DIR__ . '/views', 'recaptcha');
+        $this->loadViewsFrom(__DIR__ . '/../views', 'recaptcha');
     }
 
     /**
@@ -36,7 +38,7 @@ class RecaptchaServiceProvider extends ServiceProvider
     public function addValidator()
     {
         $this->app->validator->extendImplicit('recaptcha', function ($attribute, $value, $parameters) {
-            $captcha   = app('recaptcha.service');
+            $captcha = app('recaptcha.service');
             $challenge = app('request')->input($captcha->getResponseKey());
 
             return $captcha->check($challenge, $value);
@@ -72,12 +74,17 @@ class RecaptchaServiceProvider extends ServiceProvider
 
     protected function handleConfig()
     {
-        $packageConfig     = __DIR__ . '/config/recaptcha.php';
+        $packageConfig = __DIR__ . '/../config/recaptcha.php';
         $destinationConfig = config_path('recaptcha.php');
 
         $this->publishes([
             $packageConfig => $destinationConfig,
         ]);
+
+        $this->mergeConfigFrom(
+            $packageConfig,
+            'recaptcha'
+        );
     }
 
     /**

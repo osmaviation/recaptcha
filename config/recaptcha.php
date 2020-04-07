@@ -61,6 +61,6 @@ return [
     |
     */
 
-    'version'     => 2,
+    'version'     => env('RECAPTCHA_VERSION', 2),
 
 ];

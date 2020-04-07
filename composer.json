@@ -1,31 +1,42 @@
 {
-    "name": "osmaviation/recaptcha",
-    "description": "reCAPTCHA Validator for Laravel 5",
-	"keywords": ["recaptcha", "captcha", "laravel", "laravel5"],
-	"homepage": "http://github.com/greggilbert/recaptcha",
-	"license": "MIT",
-    "authors": [
-        {
-            "name": "Greg Gilbert",
-            "email": "greg@greg-gilbert.com"
-        }
-    ],
-    "require": {
-        "php": ">=5.3.0",
-        "illuminate/support": "~5.1|~6.0"
+  "name": "osmaviation/recaptcha",
+  "description": "reCAPTCHA Validator for Laravel 5",
+  "keywords": [
+    "recaptcha",
+    "captcha",
+    "laravel",
+    "laravel5"
+  ],
+  "homepage": "http://github.com/osmaviation/recaptcha",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Greg Gilbert",
+      "email": "greg@greg-gilbert.com"
     },
-    "autoload": {
-        "classmap": [
-            "src/migrations"
-        ],
-        "psr-4": {
-            "Greggilbert\\Recaptcha\\": "src/"
-        }
+    {
+      "name": "Tor Morten Jensen",
+      "email": "tormorten.jensen@osmaviation.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.3",
+    "illuminate/support": ">=5.8"
+  },
+  "autoload": {
+    "psr-4": {
+      "Greggilbert\\Recaptcha\\": "src/"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "2.2-dev"
     },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "2.2-dev"
-        }
-    },
-    "minimum-stability": "dev"
+    "laravel": {
+      "providers": [
+        "OSMAviation\\Recaptcha\\RecaptchaServiceProvider"
+      ]
+    }
+  },
+  "minimum-stability": "dev"
 }
