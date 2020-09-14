@@ -61,6 +61,20 @@ return [
     |
     */
 
-    'version'     => env('RECAPTCHA_VERSION', 2),
+    'version'     => env('RECAPTCHA_VERSION', 3),
+
+    /*
+    |--------------------------------------------------------------------------
+    | V3 specific options
+    |--------------------------------------------------------------------------
+    |
+    | Please see reCAPTCHA v3 documentation https://developers.google.com/recaptcha/docs/v3
+    |
+    */
+
+    'threshold' => env('RECAPTCHA_V3_THRESHOLD', 0.5),
+    'actions' => [
+        'register' => 'register'
+    ]
 
 ];
