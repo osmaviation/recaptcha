@@ -31,25 +31,23 @@ return [
     | Driver
     |--------------------------------------------------------------------------
     |
-    | Determine how to call out to get response; values are 'curl' or 'native'.
-    | Only applies to v2.
+    | Determine the http-client class.
+    | Only applies to v2/v3.
     |
     */
-    'driver'      => 'curl',
+    'driver'      => \OSMAviation\Recaptcha\Tools\Driver\Guzzle::class,
 
     /*
     |--------------------------------------------------------------------------
     | Options
     |--------------------------------------------------------------------------
     |
-    | Various options for the driver
+    | Various options for the drivers
     |
     */
     'options'     => [
-
-        'curl_timeout' => 1,
+        'timeout' => 1,
         'curl_verify' => true,
-
     ],
 
     /*

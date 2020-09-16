@@ -52,6 +52,7 @@ class RecaptchaServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->bindDriver();
         $this->bindRecaptcha();
         $this->handleConfig();
     }
@@ -74,6 +75,16 @@ class RecaptchaServiceProvider extends ServiceProvider
             return new Recaptcha($this->app->make('recaptcha.service'), app('config')->get('recaptcha'));
         });
 
+    }
+
+    protected function bindDriver()
+    {
+        $this->app->bind('recaptcha.driver', function () {
+
+            $driverClass = app('config')->get('recaptcha.driver', \OSMAviation\Recaptcha\Tools\Driver\Native::class);
+
+            return new $driverClass;
+        });
     }
 
     protected function handleConfig()
