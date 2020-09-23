@@ -80,10 +80,7 @@ class RecaptchaServiceProvider extends ServiceProvider
     protected function bindDriver()
     {
         $this->app->bind('recaptcha.driver', function () {
-
-            $driverClass = app('config')->get('recaptcha.driver', \OSMAviation\Recaptcha\Tools\Driver\Native::class);
-
-            return new $driverClass;
+            return new \OSMAviation\Recaptcha\Tools\HttpClient();
         });
     }
 
