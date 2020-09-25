@@ -1,11 +1,12 @@
 <?php
 
 namespace OSMAviation\Recaptcha\Service;
+use Illuminate\Support\Facades\Http;
 
 /**
  * Handle sending out and receiving a response to validate the captcha
  */
-class CheckRecaptchaV2 implements RecaptchaInterface
+class CheckRecaptchaV3 implements RecaptchaInterface
 {
 
     /**
@@ -18,7 +19,6 @@ class CheckRecaptchaV2 implements RecaptchaInterface
      */
     public function check($challenge, $response)
     {
-
         $response = app('recaptcha.driver')
             ->setUrl('https://www.google.com/recaptcha/api/siteverify')
             ->call([
@@ -34,12 +34,29 @@ class CheckRecaptchaV2 implements RecaptchaInterface
             return false;
         }
 
-        return $response['success'];
+        /**
+         * Fake token
+         */
+        if(!$response['success']){
+            return false;
+        }
+
+        /**
+         * Ensure the action name is the name we expect
+         */
+        if (!isset($response['action']) || $response['action'] !== app('config')->get('recaptcha.actions.register')) {
+            return false;
+        }
+
+        /**
+         * Check the score
+         */
+        return isset($response['score']) && floatval(app('config')->get('recaptcha.threshold')) < floatval($response['score']);
     }
 
     public function getTemplate()
     {
-        return 'captchav2';
+        return 'captchav3';
     }
 
     public function getResponseKey()

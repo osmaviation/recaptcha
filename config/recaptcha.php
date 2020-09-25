@@ -28,28 +28,14 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Driver
-    |--------------------------------------------------------------------------
-    |
-    | Determine how to call out to get response; values are 'curl' or 'native'.
-    | Only applies to v2.
-    |
-    */
-    'driver'      => 'curl',
-
-    /*
-    |--------------------------------------------------------------------------
     | Options
     |--------------------------------------------------------------------------
     |
-    | Various options for the driver
+    | Various options for the drivers
     |
     */
     'options'     => [
-
-        'curl_timeout' => 1,
-        'curl_verify' => true,
-
+        'timeout' => 1,
     ],
 
     /*
@@ -61,6 +47,20 @@ return [
     |
     */
 
-    'version'     => env('RECAPTCHA_VERSION', 2),
+    'version'     => env('RECAPTCHA_VERSION', 3),
+
+    /*
+    |--------------------------------------------------------------------------
+    | V3 specific options
+    |--------------------------------------------------------------------------
+    |
+    | Please see reCAPTCHA v3 documentation https://developers.google.com/recaptcha/docs/v3
+    |
+    */
+
+    'threshold' => env('RECAPTCHA_V3_THRESHOLD', 0.5),
+    'actions' => [
+        'register' => 'register'
+    ]
 
 ];
