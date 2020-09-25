@@ -52,6 +52,7 @@ class RecaptchaServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->bindDriver();
         $this->bindRecaptcha();
         $this->handleConfig();
     }
@@ -59,8 +60,12 @@ class RecaptchaServiceProvider extends ServiceProvider
     protected function bindRecaptcha()
     {
         $this->app->bind('recaptcha.service', function () {
-            if (app('config')->get('recaptcha.version', false) === 2 || app('config')->get('recaptcha.v2', false)) {
+            if (app('config')->get('recaptcha.version', false) == 2 || app('config')->get('recaptcha.v2', false)) {
                 return new Service\CheckRecaptchaV2;
+            }
+
+            if ((int)app('config')->get('recaptcha.version', false) == 3) {
+                return new Service\CheckRecaptchaV3;
             }
 
             return new Service\CheckRecaptcha;
@@ -70,6 +75,13 @@ class RecaptchaServiceProvider extends ServiceProvider
             return new Recaptcha($this->app->make('recaptcha.service'), app('config')->get('recaptcha'));
         });
 
+    }
+
+    protected function bindDriver()
+    {
+        $this->app->bind('recaptcha.driver', function () {
+            return new \OSMAviation\Recaptcha\Tools\HttpClient();
+        });
     }
 
     protected function handleConfig()
